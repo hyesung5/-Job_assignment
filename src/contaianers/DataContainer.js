@@ -10,9 +10,15 @@ class DataContainer extends Component {
   }
 
   componentDidUpdate(prevProps){
- const{data}= this.props;
+ const{data, data_fail, insert_fail}= this.props;
     if(data !== prevProps.data){
         this.DataCall();
+    }
+    if(data_fail !== prevProps.data_fail){
+      alert("데이터 로드중 에러가 발생했습니다.");
+    }
+    if(insert_fail !== prevProps.insert_fail){
+      alert("데이터 저장중 에러가 발생했습니다.");
     }
   }
 
@@ -62,7 +68,9 @@ const mapStateToProps = (state) => ({
   list: state.Data_module.list,
   nickName: state.Data_module.nickName,
   content: state.Data_module.content,
-  data: state.Data_module.data
+  data: state.Data_module.data,
+  data_fail:state.Data_module.data_fail,
+  insert_fail:state.Data_module.insert_fail,
 });
 
 const mapDispatchToProps = {

@@ -2,13 +2,15 @@ import {createAction, handleActions} from 'redux-actions';
 import axios from 'axios';
 
  const LOAD="LOAD";
- const FAIL="FAIL";
+ const DATA_FAIL="DATA_FAIL";
+ const INSERT_FAIL="INSERT_FAIL";
  const GET_DATA ="GET-DATA";
  const VALUE_CHANGE="VALUE_CHANGE";
  const INSERT ="INSERT";
 
  const Load = createAction(LOAD,(bool)=> bool);
- const Fail= createAction(FAIL, (err)=> err);
+ const DataFail= createAction(DATA_FAIL, (err)=> err);
+ const InsertFail= createAction(INSERT_FAIL, (err)=> err);
  const Data =createAction(GET_DATA, (data)=> data);
  const Insert = createAction(INSERT, (data)=> data);
  const insert_config ={
@@ -25,7 +27,7 @@ export const GetData =()=> async (dispatch) => {
         const {data} = await axios.get("http://dauth.daios.net/v1/boards",data_config);
         dispatch(Data(data.data));
     }catch(e){
-    dispatch(Fail(e));
+    dispatch(DataFail(e));
     }
     dispatch(Load(false))
 }
@@ -36,7 +38,7 @@ export const DataInsert = (params)=> async (dispatch)=> {
       dispatch(Insert(data));
 
     }catch(e){
-        dispatch(Fail(e));
+        dispatch(InsertFail(e));
     }
     dispatch(Load(false))
 }
@@ -47,7 +49,8 @@ export const valueChange= createAction(VALUE_CHANGE, ({key, value})=> ({key, val
 const initialState ={
 list: [],
 load:false,
-fail:"",
+data_fail:"",
+insert_fail:"",
 nickName:"",
 content:"",
 data:""
@@ -62,9 +65,9 @@ export default handleActions({
         ...state,
         list: action.payload
     }),
-    [FAIL]: (state, action)=> ({
+    [DATA_FAIL]: (state, action)=> ({
         ...state,
-        fail: action.payload
+        data_fail: action.payload
     }),
     [VALUE_CHANGE]: (state, action) => ({
         ...state,
@@ -75,5 +78,9 @@ export default handleActions({
         data: action.payload,
         nickName:"",
         content:"",
+    }),
+    [INSERT_FAIL]: (state, action) => ({
+        ...state,
+        insert_fail: action.payload
     })
 }, initialState);
