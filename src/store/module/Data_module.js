@@ -72,6 +72,8 @@ export default handleActions({
     }),
     [INSERT]: (state, action) => ({
         ...state,
-        data: action.payload
+        data: action.payload,
+        nickName:"",
+        content:"",
     })
 }, initialState);

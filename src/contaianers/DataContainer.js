@@ -9,6 +9,13 @@ class DataContainer extends Component {
     this.DataCall();
   }
 
+  componentDidUpdate(prevProps){
+ const{data}= this.props;
+    if(data !== prevProps.data){
+        this.DataCall();
+    }
+  }
+
   DataCall = () => {
     console.log("datacall");
     const { GetData } = this.props;
@@ -55,6 +62,7 @@ const mapStateToProps = (state) => ({
   list: state.Data_module.list,
   nickName: state.Data_module.nickName,
   content: state.Data_module.content,
+  data: state.Data_module.data
 });
 
 const mapDispatchToProps = {

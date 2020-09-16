@@ -4,7 +4,7 @@ class Data_Input extends Component {
   render() {
     const { nickName, content, valueChange, onInsert } = this.props;
     return (
-      <div>
+      <div style={{textAlign:"center", marginTop:"20px", marginBottom:"50px"}}>
         <label>
           {" "}
           닉네임{" "}
